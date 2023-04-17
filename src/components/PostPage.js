@@ -1,37 +1,56 @@
-import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useContext } from "react";
+import DataContext from "../context/DataContext";
+import api from "../api/posts";
 
-const PostPage = ({posts, handleDelete}) => {
-  
-  const {id} = useParams();
-  const post = posts.find((post)=> (post.id).toString()=== id);
+const PostPage = () => {
+  const navigate = useNavigate();
+  const { posts, setPosts } = useContext(DataContext);
+  const { id } = useParams();
+  const post = posts.find((post) => post.id.toString() === id);
+
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/posts/${id}`);
+      const postList = posts.filter((post) => post.id !== id);
+      setPosts(postList);
+      navigate("/");
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  };
 
   return (
-    <main className='PostPage'>
+    <main className="PostPage">
       <article className="post">
-        {post && 
+        {post && (
           <>
             <h2>{post.title}</h2>
-            <p className='postdate'>{post.datetime}</p>
-            <p className='postBody'>{post.body}</p>
+            <p className="postdate">{post.datetime}</p>
+            <p className="postBody">{post.body}</p>
             <Link to={`/edit/${post.id}`}>
-              <button className='editButton'>Edit Button</button>
+              <button className="editButton">Edit Button</button>
             </Link>
-            <button className='deleteButton' onClick={()=>handleDelete(post.id)}>Delete Post</button>
+            <button
+              className="deleteButton"
+              onClick={() => handleDelete(post.id)}>
+              Delete Post
+            </button>
           </>
-        }
-        {!post &&
-                <>
-                        <h2>Post Not Found</h2>
-                        <p>Well, that's disappointing.</p>
-                        <p>
-                          <Link to='/'>Visit Our Homepage</Link>
-                        </p>
-                    </>
-                }
+        )}
+        {!post && (
+          <>
+            <h2>Post Not Found</h2>
+            <p>Well, that's disappointing.</p>
+            <p>
+              <Link to="/">Visit Our Homepage</Link>
+            </p>
+          </>
+        )}
       </article>
     </main>
-  )
-}
+  );
+};
 
-export default PostPage
+export default PostPage;

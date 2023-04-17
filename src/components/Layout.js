@@ -4,12 +4,12 @@ import Navbar from "./Navbar"
 import Footer from "./Footer"
 import { Outlet } from 'react-router-dom'
 
-const Layout = ({search, setSearch, width}) => {
+const Layout = () => {
   
   return (
     <div className='App'>
-        <Header title="Atul Tingre Blog" width={width}/>
-        <Navbar search={search} setSeaarch={setSearch} />
+        <Header title="Atul Tingre Blog"/>
+        <Navbar/>
         <Outlet/>
         <Footer/>
     </div>
