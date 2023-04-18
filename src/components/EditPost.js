@@ -19,33 +19,33 @@ const EditPost = () => {
   //   setPosts(posts.map((post)=> post.id === id ? {...response.data}: post));
   //   setEditTitle('');
   //   setEditBody('');
-  //   navigate('/');
   // } catch(err){
-  //   console.log(`Error: ${err.message}`)
-  // }
-
-  const editTitle = useStoreState((state) => state.editTitle);
-  const editBody = useStoreState((state) => state.editBody);
-
-  const editPost = useStoreActions((actions) => actions.editPost);
-  const setEditTitle = useStoreActions((actions) => actions.setEditTitle);
-  const setEditBody = useStoreActions((actions) => actions.setEditBody);
-
-  const getPostById = useStoreState((state) => state.getPostById);
-  const post = getPostById(id);
-
-  useEffect(() => {
-    if (post) {
-      setEditTitle(post.title);
-      setEditBody(post.body);
-    }
-  }, [post, setEditTitle, setEditBody]);
-
-  const handleEdit = (id) => {
-    const datetime = format(new Date(), "MMMM dd, yyyy pp");
-    const updatedPost = { id, title: editTitle, datetime, body: editBody };
-    editPost(updatedPost);
-    navigate(`post/${id}`); 
+    //   console.log(`Error: ${err.message}`)
+    // }
+    
+    const editTitle = useStoreState((state) => state.editTitle);
+    const editBody = useStoreState((state) => state.editBody);
+    
+    const editPost = useStoreActions((actions) => actions.editPost);
+    const setEditTitle = useStoreActions((actions) => actions.setEditTitle);
+    const setEditBody = useStoreActions((actions) => actions.setEditBody);
+    
+    const getPostById = useStoreState((state) => state.getPostById);
+    const post = getPostById(id);
+    
+    useEffect(() => {
+      if (post) {
+        setEditTitle(post.title);
+        setEditBody(post.body);
+      }
+    }, [post, setEditTitle, setEditBody]);
+    
+    const handleEdit = (id) => {
+      const datetime = format(new Date(), "MMMM dd, yyyy pp");
+      const updatedPost = { id, title: editTitle, datetime, body: editBody };
+      editPost(updatedPost);
+      navigate(`/post/${id}`); 
+        navigate('/');
   };
 
   return (

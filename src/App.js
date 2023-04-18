@@ -27,12 +27,12 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index path="/" element={<Home isLoading={isLoading} fetchError={fetchError}/>} />
-            <Route exact path="post">
+            <Route  path="/post">
               <Route index element={<NewPost />} />
-              <Route exact path="post:id" element={<PostPage />} />
+              <Route exact path="/post:id" element={<PostPage />} />
             </Route>
-            <Route path="edit/:id" element={<EditPost />} />
-            <Route path="about" element={<About />} />
+            <Route path="/edit/:id" element={<EditPost />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<Missing />} />
           </Route>
         </Routes>
