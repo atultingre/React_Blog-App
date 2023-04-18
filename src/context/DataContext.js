@@ -6,7 +6,7 @@ const DataContext = createContext({});
 export const DataProvider = ({children})=>{
     const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
 
   const {data , fetchError, isLoading} = useAxiosFetch('http://localhost:3500/posts');
@@ -20,13 +20,13 @@ export const DataProvider = ({children})=>{
       ((post.body).toLocaleLowerCase()).includes(search.toLocaleLowerCase())
     || ((post.title).toLocaleLowerCase()).includes(search.toLocaleLowerCase())
     )
-    setSearchResult(filtredResults.reverse());
+    setSearchResults(filtredResults.reverse());
   },[posts, search])
 
     return(
         <DataContext.Provider value={{
             search, setSearch, 
-            searchResult, fetchError, isLoading, 
+            searchResults, fetchError, isLoading, 
             posts,setPosts
         }}>
             {children}
